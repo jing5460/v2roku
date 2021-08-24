@@ -6,7 +6,7 @@
   ],
   "env": {
     "PROTOCOL": {
-      "description": "协议VMess或VLESS",
+      "description": "协议VMess或VLESS，请填小写的vmess或vless",
       "value": "vmess",
       "required": true
     },
