@@ -36,11 +36,28 @@ heorku可以绑卡（应用一直在线，不扣费），绑定域名，套cf，
 
 ### CloudFlare Workers反代代码（可分别用两个账号的应用程序名（`PROTOCOL`、`UUID`、`WS_PATH`保持一致），单双号天分别执行，那一个月就有550+550小时）
 <details>
-<summary>CloudFlare Workers单双日反代代码</summary>
+<summary>CloudFlare Workers单账户反代代码</summary>
 
 ```js
-const SingleDay = 'appname.herokuapp.com'
-const DoubleDay = 'appname.herokuapp.com'
+addEventListener(
+    "fetch",event => {
+        let url=new URL(event.request.url);
+        url.hostname="appname.herokuapp.com";
+        let request=new Request(url,event.request);
+        event. respondWith(
+            fetch(request)
+        )
+    }
+)
+```
+</details>
+
+<details>
+<summary>CloudFlare Workers单双日轮换反代代码</summary>
+
+```js
+const SingleDay = 'app0.herokuapp.com'
+const DoubleDay = 'app1.herokuapp.com'
 addEventListener(
     "fetch",event => {
     
@@ -63,7 +80,7 @@ addEventListener(
 </details>
 
 <details>
-<summary>CloudFlare Workers每五天轮换一遍式</summary>
+<summary>CloudFlare Workers每五天轮换一遍式反代代码</summary>
 
 ```js
 const Day0 = 'app0.herokuapp.com'
